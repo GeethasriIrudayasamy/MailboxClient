@@ -4,7 +4,6 @@ const initialAuthState = {
     isAuthenticated: false,
     token: "",
     userId: "",
-    recieverId: "",
 };
 const authSlice = createSlice({
     name: "authentication",
@@ -35,7 +34,6 @@ const authSlice = createSlice({
                 state.token = localStorage.getItem("token");
                 const email = localStorage.getItem("email");
                 state.userId = email.replace(/[@,.]/g, "");
-                state.recieverId = localStorage.getItem("reciever");
             }
         },
     },

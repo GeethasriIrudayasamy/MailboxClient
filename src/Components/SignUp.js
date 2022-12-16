@@ -59,7 +59,7 @@ const SignUp = () => {
                     dispatch(authActions.login(data.idToken));
                     dispatch(authActions.setUserId(enteredEmail));
                     event.target.reset();
-                    history.replace("/welcome");
+                    history.replace("/mail-box");
                     return data;
                 } else {
                     await res.json();
