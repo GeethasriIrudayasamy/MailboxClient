@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import SignUp from "./Components/SignUp";
 import Welcome from "./Components/Welcome";
+import ComposeMail from "./Components/ComposeMail";
 import { authActions } from "./Store/AuthSlice";
 
 function App() {
@@ -18,10 +19,13 @@ function App() {
                     <Redirect to="/" />
                 </Route>
             )}
-            {isAuth && <Redirect to="/welcome" />}
+            {isAuth && <Redirect to="/composeMail" />}
 
             <Route path="/welcome">
                 <Welcome />
+            </Route>
+            <Route path="/composeMail">
+                <ComposeMail />
             </Route>
         </Fragment>
     );
