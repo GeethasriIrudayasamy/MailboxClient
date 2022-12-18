@@ -1,7 +1,8 @@
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState } from "draft-js";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { mailActions } from "../Store/MailSlice";
 import { useRef } from "react";
 import axios from "axios";
 import classes from "./ComposeMail.module.css";
@@ -10,6 +11,7 @@ const ComposeMail = () => {
     const recieverIdRef = useRef();
     const subjectRef = useRef();
 
+    const dispatch = useDispatch();
     const userId = useSelector((state) => state.auth.userId);
     const editorState = EditorState.createEmpty();
     let message;
@@ -35,6 +37,15 @@ const ComposeMail = () => {
             .then((res) => {
                 console.log(res.data);
                 alert("Successful");
+                dispatch(
+                    mailActions.addMailToList({
+                        to: recieverId,
+                        subject: subject,
+                        message: message,
+                        isRead: false,
+                        id: res.data.name,
+                    })
+                );
             })
             .catch((err) => alert(err));
     };

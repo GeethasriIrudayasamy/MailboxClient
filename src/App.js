@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
-import { Route } from "react-router-dom";
+import { Route, Router } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
+import ReadMail from "./Components/ReadMail";
 import { mailActions } from "./Store/MailSlice";
 import SignUp from "./Components/SignUp";
-
 import ComposeMail from "./Components/ComposeMail";
 import { authActions } from "./Store/AuthSlice";
 import MailBox from "./Components/MailBox";
@@ -22,7 +22,6 @@ function App() {
         )
         .then((res) => {
             let datas = res.data;
-
             let mailArray = [];
             for (let id in datas) {
                 let mail = datas[id];
@@ -35,15 +34,27 @@ function App() {
         <Fragment>
             {!isAuth && <SignUp />}
             {!isAuth && (
-                <Route path="/mail-box">
-                    <Redirect to="/" />
-                </Route>
+                <Router>
+                    <Route path="/mail-box">
+                        <Redirect to="/" />
+                    </Route>
+                    <Route path="/compose-mail">
+                        <Redirect to="/" />
+                    </Route>
+                    <Route path="/read-mail">
+                        <Redirect to="/" />
+                    </Route>
+                </Router>
             )}
+
             <Route path="/mail-box">
                 <MailBox />
             </Route>
             <Route path="/compose-mail">
                 <ComposeMail />
+            </Route>
+            <Route path="/read-mail">
+                <ReadMail />
             </Route>
         </Fragment>
     );

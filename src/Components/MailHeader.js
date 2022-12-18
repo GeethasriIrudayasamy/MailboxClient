@@ -9,7 +9,6 @@ const MailHeader = () => {
                 <input type="text" placeholder="Search here.." />
                 <button className={classes.searchButton}>Search</button>
             </div>
-
             <div className={classes.userId}>{userId}</div>
         </div>
     );

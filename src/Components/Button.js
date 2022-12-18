@@ -1,7 +1,9 @@
 import classes from "./Button.module.css";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 const Button = () => {
+    const totalMail = useSelector((state) => state.mail.totalmail);
     const history = useHistory();
     const composeButtonHandler = () => {
         history.push("./compose-mail");
@@ -16,9 +18,11 @@ const Button = () => {
             </button>
 
             <div className={classes.views}>
-                <div>
+                <div className={classes.unread}>
                     <button>Inbox</button>
+                    <span>{`[${totalMail}]`}</span>
                 </div>
+
                 <div>
                     <button>Unread</button>
                 </div>
