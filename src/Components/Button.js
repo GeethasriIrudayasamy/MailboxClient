@@ -1,12 +1,54 @@
 import classes from "./Button.module.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { mailActions } from "../Store/MailSlice";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 const Button = () => {
-    const totalMail = useSelector((state) => state.mail.totalmail);
+    const dispatch = useDispatch();
+    const unRead = useSelector((state) => state.mail.unread);
+    const userId = useSelector((state) => state.auth.userId);
     const history = useHistory();
     const composeButtonHandler = () => {
         history.push("./compose-mail");
+    };
+    const inboxHandler = () => {
+        dispatch(mailActions.setInboxTrue(true));
+        axios
+            .get(
+                `https://mailbox-client-111111-default-rtdb.firebaseio.com/mails/${userId}inbox.json`
+            )
+            .then((res) => {
+                let datas = res.data;
+
+                let mailArray = [];
+                for (let id in datas) {
+                    let mails = datas[id];
+                    mails.id = id;
+                    mailArray.push(mails);
+                }
+                dispatch(mailActions.addMail(mailArray));
+            });
+        history.replace("./mail-box");
+    };
+    const sentMailHandler = () => {
+        dispatch(mailActions.setInboxTrue(false));
+        axios
+            .get(
+                `https://mailbox-client-111111-default-rtdb.firebaseio.com/mails/${userId}sentbox.json`
+            )
+            .then((res) => {
+                let datas = res.data;
+
+                let mailArray = [];
+                for (let id in datas) {
+                    let mails = datas[id];
+                    mails.id = id;
+                    mailArray.push(mails);
+                }
+                dispatch(mailActions.sentMail(mailArray));
+            });
+        history.replace("./mail-box");
     };
     return (
         <div>
@@ -19,54 +61,11 @@ const Button = () => {
 
             <div className={classes.views}>
                 <div className={classes.unread}>
-                    <button>Inbox</button>
-                    <span>{`[${totalMail}]`}</span>
-                </div>
-
-                <div>
-                    <button>Unread</button>
+                    <button onClick={inboxHandler}>Inbox</button>
+                    <span>{`[unread:${unRead}]`}</span>
                 </div>
                 <div>
-                    <button>Starred</button>
-                </div>
-                <div>
-                    <button>Drafts</button>
-                </div>
-                <div>
-                    <button>Sent</button>
-                </div>
-                <div>
-                    <button>Archive</button>
-                </div>
-                <div>
-                    <button>Spam</button>
-                </div>
-                <div>
-                    <button>Deleted Items</button>
-                </div>
-            </div>
-            <div className={classes.views}>
-                <div>VIEWS</div>
-                <div>
-                    <button>Photos</button>
-                </div>
-                <div>
-                    <button>Documents</button>
-                </div>
-                <div>
-                    <button>Subscription</button>
-                </div>
-                <div>
-                    <button>Deals</button>
-                </div>
-                <div>
-                    <button>Travel</button>
-                </div>
-            </div>
-            <div className={classes.views}>
-                <div>FOLDERS</div>
-                <div>
-                    <button>+New Folder</button>
+                    <button onClick={sentMailHandler}>Sent box</button>
                 </div>
             </div>
         </div>

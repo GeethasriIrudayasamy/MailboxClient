@@ -1,5 +1,5 @@
 import MailHeader from "./MailHeader";
-import Buttons from "./Button";
+import Button from "./Button";
 import classes from "./MailBox.module.css";
 import MailList from "./MailList";
 import { useSelector } from "react-redux";
@@ -23,7 +23,7 @@ const MailBox = () => {
             <MailHeader />
             <div className={classes.main}>
                 <div className={classes.buttons}>
-                    <Buttons />
+                    <Button />
                 </div>
                 <div className={classes.list}>{mailList}</div>
             </div>

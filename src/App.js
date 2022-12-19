@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Route, Router } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
@@ -34,7 +34,7 @@ function App() {
         <Fragment>
             {!isAuth && <SignUp />}
             {!isAuth && (
-                <Router>
+                <nav>
                     <Route path="/mail-box">
                         <Redirect to="/" />
                     </Route>
@@ -44,8 +44,9 @@ function App() {
                     <Route path="/read-mail">
                         <Redirect to="/" />
                     </Route>
-                </Router>
+                </nav>
             )}
+            {isAuth && <Redirect to="/mail-box" />}
 
             <Route path="/mail-box">
                 <MailBox />
