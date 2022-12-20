@@ -2,13 +2,13 @@ import React, { Fragment } from "react";
 import { Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import axios from "axios";
 import ReadMail from "./Components/ReadMail";
 import { mailActions } from "./Store/MailSlice";
 import SignUp from "./Components/SignUp";
 import ComposeMail from "./Components/ComposeMail";
 import { authActions } from "./Store/AuthSlice";
 import MailBox from "./Components/MailBox";
+import { useAxiosGet } from "./Hooks/apiGetHook";
 
 function App() {
     const dispatch = useDispatch();
@@ -16,21 +16,36 @@ function App() {
     const isAuth = useSelector((state) => state.auth.isAuthenticated);
     const userId = useSelector((state) => state.auth.userId);
 
+    const { data, fetchError } = useAxiosGet(
+        `https://mailbox-client-111111-default-rtdb.firebaseio.com/mails/${userId}inbox.json`
+    );
+
+    let mailArray = [];
+    for (let id in data) {
+        let mails = data[id];
+        console.log(id);
+        mails.id = id;
+        mailArray.push(mails);
+    }
+    dispatch(mailActions.addMail(mailArray));
+
+    fetchError && alert(fetchError);
+
     setInterval(() => {
-        axios
-            .get(
-                `https://mailbox-client-111111-default-rtdb.firebaseio.com/mails/${userId}inbox.json`
-            )
-            .then((res) => {
-                let datas = res.data;
-                let mailArray = [];
-                for (let id in datas) {
-                    let mail = datas[id];
-                    mail.id = id;
-                    mailArray.push(mail);
-                }
-                dispatch(mailActions.addMail(mailArray));
-            });
+        // axios
+        //     .get(
+        //         `https://mailbox-client-111111-default-rtdb.firebaseio.com/mails/${userId}inbox.json`
+        //     )
+        //     .then((res) => {
+        //         let datas = res.data;
+        //         let mailArray = [];
+        //         for (let id in datas) {
+        //             let mail = datas[id];
+        //             mail.id = id;
+        //             mailArray.push(mail);
+        //         }
+        //         dispatch(mailActions.addMail(mailArray));
+        //     });
     }, 2000);
     return (
         <Fragment>
