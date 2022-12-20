@@ -23,7 +23,6 @@ function App() {
     let mailArray = [];
     for (let id in data) {
         let mails = data[id];
-        console.log(id);
         mails.id = id;
         mailArray.push(mails);
     }
@@ -31,22 +30,22 @@ function App() {
 
     fetchError && alert(fetchError);
 
-    setInterval(() => {
-        // axios
-        //     .get(
-        //         `https://mailbox-client-111111-default-rtdb.firebaseio.com/mails/${userId}inbox.json`
-        //     )
-        //     .then((res) => {
-        //         let datas = res.data;
-        //         let mailArray = [];
-        //         for (let id in datas) {
-        //             let mail = datas[id];
-        //             mail.id = id;
-        //             mailArray.push(mail);
-        //         }
-        //         dispatch(mailActions.addMail(mailArray));
-        //     });
-    }, 2000);
+    // setInterval(() => {
+    // axios
+    //     .get(
+    //         `https://mailbox-client-111111-default-rtdb.firebaseio.com/mails/${userId}inbox.json`
+    //     )
+    //     .then((res) => {
+    //         let datas = res.data;
+    //         let mailArray = [];
+    //         for (let id in datas) {
+    //             let mail = datas[id];
+    //             mail.id = id;
+    //             mailArray.push(mail);
+    //         }
+    //         dispatch(mailActions.addMail(mailArray));
+    //     });
+    // }, 2000);
     return (
         <Fragment>
             {!isAuth && <SignUp />}

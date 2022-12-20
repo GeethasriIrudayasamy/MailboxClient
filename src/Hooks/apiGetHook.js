@@ -18,7 +18,7 @@ export const useAxiosGet = (url) => {
                 }
             };
             fetchData(url);
-        }, 2000);
+        }, 3000);
     }, [url]);
     return { data, error };
 };
