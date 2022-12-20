@@ -12,6 +12,7 @@ const Button = () => {
     const composeButtonHandler = () => {
         history.push("./compose-mail");
     };
+
     const inboxHandler = () => {
         dispatch(mailActions.setInboxTrue(true));
         axios
@@ -29,8 +30,12 @@ const Button = () => {
                 }
                 dispatch(mailActions.addMail(mailArray));
             });
-        history.replace("./mail-box");
     };
+
+    // useEffect(() => {
+    //     inboxHandler();
+    // }, [inboxHandler]);
+
     const sentMailHandler = () => {
         dispatch(mailActions.setInboxTrue(false));
         axios
@@ -48,7 +53,6 @@ const Button = () => {
                 }
                 dispatch(mailActions.sentMail(mailArray));
             });
-        history.replace("./mail-box");
     };
     return (
         <div>

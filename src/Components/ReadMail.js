@@ -6,7 +6,7 @@ const ReadMail = () => {
     const history = useHistory();
     const inbox = useSelector((state) => state.mail.inbox);
     const currentMail = useSelector((state) => state.mail.currentMail);
-    console.log(currentMail);
+    // console.log(currentMail);
     const closeMailHandler = () => {
         history.replace("./mail-box");
     };

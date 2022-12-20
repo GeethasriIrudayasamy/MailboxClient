@@ -6,7 +6,7 @@ import classes from "./MailList.module.css";
 import { Fragment } from "react";
 
 const MailList = (props) => {
-    console.log(props);
+    // console.log(props);
     const userId = useSelector((state) => state.auth.userId);
     const inbox = useSelector((state) => state.mail.inbox);
     const dispatch = useDispatch();
@@ -55,7 +55,7 @@ const MailList = (props) => {
 
                 .then((res) => {
                     dispatch(
-                        mailActions.updateMail({
+                        mailActions.updateSentMail({
                             id: props.id,
                             to: props.to,
                             subject: props.subject,
@@ -86,7 +86,7 @@ const MailList = (props) => {
                     `https://mailbox-client-111111-default-rtdb.firebaseio.com/mails/${userId}sentbox/${props.id}.json`
                 )
                 .then(() => {
-                    dispatch(mailActions.deleteMail(props.id));
+                    dispatch(mailActions.deleteSentMail(props.id));
                 });
         }
     };
